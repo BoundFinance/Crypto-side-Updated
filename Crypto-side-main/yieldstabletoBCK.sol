@@ -39,6 +39,10 @@ interface global {
  function globaltotaldepositsub(uint _amount) external;
 }
 
+interface cashbackcontract {
+  function depositUSDC(uint256 _amount) external;
+}
+
 
 
 
@@ -79,6 +83,7 @@ contract StablecointoBCK is DSAuth, DSNote {
     event BCKBurned(address indexed user, uint256 amount);
     emissions public emmission; 
     global public globals;
+    cashbackcontract public cash;
 
     constructor(address _erc20Address, address _bck, address _cashback, address _protocol)  {
         stableToken = IERC20(_erc20Address);
@@ -93,6 +98,10 @@ contract StablecointoBCK is DSAuth, DSNote {
 
     function setglobal(address _globaladdress) external auth {
         globals = global(_globaladdress);
+    }
+
+    function setcashbackcontract(address _cashbackappcontract) public auth {
+        cash = cashbackcontract(_cashbackappcontract);
     }
 
     function setratios (uint amount, uint sharetoprotocol, uint reserveamount) public auth {
@@ -224,7 +233,7 @@ function convertExcess() internal  {
         uint cashbackappreward = amountForConversion1 * ((100 - protocolshareofexcess) / 100);
         cashbackappshare += cashbackappreward;
         uint protocolreward = amountForConversion1 - cashbackappreward;
-        stableToken.transferFrom(address(this), address(cashbackapp), cashbackappreward);
+        cash.depositUSDC(cashbackappreward);
         stableToken.transferFrom(address(this), address(protocol), protocolreward);
         emit Distributed(cashbackappreward);     
     }
