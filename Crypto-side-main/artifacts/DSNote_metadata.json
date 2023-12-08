@@ -1,0 +1,88 @@
+{
+	"compiler": {
+		"version": "0.8.23+commit.f704f362"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": true,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes4",
+						"name": "sig",
+						"type": "bytes4"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "guy",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "foo",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "bar",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "wad",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "fax",
+						"type": "bytes"
+					}
+				],
+				"name": "LogNote",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Crypto-side-main/note.sol": "DSNote"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Crypto-side-main/note.sol": {
+			"keccak256": "0x5719373b7c7032b0a15736d49ca2cda5f3ccaaf4f69bca1084fe0463b4296fdb",
+			"urls": [
+				"bzz-raw://52b232c27c413f3734df2342893d0b87eb68807704b61d9eb244035e19033ed5",
+				"dweb:/ipfs/QmXE9qv9bkmjpnvRDL9natjHTa6Sfm6N7FJv9VffYXQR1E"
+			]
+		}
+	},
+	"version": 1
+}

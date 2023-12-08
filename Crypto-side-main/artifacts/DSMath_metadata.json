@@ -1,0 +1,44 @@
+{
+	"compiler": {
+		"version": "0.8.23+commit.f704f362"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Crypto-side-main/math.sol": "DSMath"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Crypto-side-main/math.sol": {
+			"keccak256": "0x8be286cf779d90081f362ad05487073efd6f11e850dfaebb7841493733116463",
+			"urls": [
+				"bzz-raw://6b392a407a80f01dd57046a0f32d0625f4d60060eb54a1af50b9b26eecf47d51",
+				"dweb:/ipfs/QmcPNTHDNcsAaaBwZeXr2YiEGbKk2pR1TT56qK1x7ERXKu"
+			]
+		}
+	},
+	"version": 1
+}

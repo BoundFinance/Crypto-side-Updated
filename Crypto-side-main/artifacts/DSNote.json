@@ -1,0 +1,104 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "6080604052348015600e575f80fd5b50603e80601a5f395ff3fe60806040525f80fdfea26469706673582212204fd6c7cfeb270dddf8b6258c37810e2d0352c60f9eff987b513ac67370789d1764736f6c63430008170033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xE JUMPI PUSH0 DUP1 REVERT JUMPDEST POP PUSH1 0x3E DUP1 PUSH1 0x1A PUSH0 CODECOPY PUSH0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x4F 0xD6 0xC7 0xCF 0xEB 0x27 0xD 0xDD 0xF8 0xB6 0x25 DUP13 CALLDATACOPY DUP2 0xE 0x2D SUB MSTORE 0xC6 0xF SWAP15 SELFDESTRUCT SWAP9 PUSH28 0x513AC67370789D1764736F6C63430008170033000000000000000000 ",
+			"sourceMap": "735:497:0:-:0;;;;;;;;;;;;;;;;;;;"
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "60806040525f80fdfea26469706673582212204fd6c7cfeb270dddf8b6258c37810e2d0352c60f9eff987b513ac67370789d1764736f6c63430008170033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x4F 0xD6 0xC7 0xCF 0xEB 0x27 0xD 0xDD 0xF8 0xB6 0x25 DUP13 CALLDATACOPY DUP2 0xE 0x2D SUB MSTORE 0xC6 0xF SWAP15 SELFDESTRUCT SWAP9 PUSH28 0x513AC67370789D1764736F6C63430008170033000000000000000000 ",
+			"sourceMap": "735:497:0:-:0;;;;;"
+		},
+		"gasEstimates": {
+			"creation": {
+				"codeDepositCost": "12400",
+				"executionCost": "64",
+				"totalCost": "12464"
+			}
+		},
+		"methodIdentifiers": {}
+	},
+	"abi": [
+		{
+			"anonymous": true,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "bytes4",
+					"name": "sig",
+					"type": "bytes4"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "guy",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "bytes32",
+					"name": "foo",
+					"type": "bytes32"
+				},
+				{
+					"indexed": true,
+					"internalType": "bytes32",
+					"name": "bar",
+					"type": "bytes32"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "wad",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "fax",
+					"type": "bytes"
+				}
+			],
+			"name": "LogNote",
+			"type": "event"
+		}
+	]
+}

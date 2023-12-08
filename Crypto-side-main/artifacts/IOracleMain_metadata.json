@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.23+commit.f704f362"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "getBCKGovPriceInUSD",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Crypto-side-main/interface.sol": "IOracleMain"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Crypto-side-main/interface.sol": {
+			"keccak256": "0xa57c33c3c4ac525eccd913eff09e8f3c6d6744f7b24080e737b8bd33aaa7fcaf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://30712b90bed215130bc3c2c557863b620ac7fd25cdd4d1fafb399b9901e57f95",
+				"dweb:/ipfs/QmZksCpgijh2F7o56LZpSMXBazqRfa8ux6PAuHn1Zj5gTa"
+			]
+		}
+	},
+	"version": 1
+}
