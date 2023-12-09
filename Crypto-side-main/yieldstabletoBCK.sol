@@ -233,7 +233,7 @@ function convertExcess() internal  {
         uint cashbackappreward = amountForConversion1 * ((100 - protocolshareofexcess) / 100);
         cashbackappshare += cashbackappreward;
         uint protocolreward = amountForConversion1 - cashbackappreward;
-        // this function will be used in mainnet //cash.depositUSDC(cashbackappreward);
+        //cash.depositUSDC(cashbackappreward);
         stableToken.transferFrom(address(this), address(cashbackapp), cashbackappreward);
         stableToken.transferFrom(address(this), address(protocol), protocolreward);
         emit Distributed(cashbackappreward);     
