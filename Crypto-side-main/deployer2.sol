@@ -68,6 +68,7 @@ contract buyTokensTestnet {
     }
 }
 
+
 contract Deployer is DSAuth {
     DSToken public bck;
     DSToken public stabletoken;
@@ -133,7 +134,7 @@ contract Deployer is DSAuth {
         require(address(globalparam) != address(0x0));
         eusdtoBCK = yieldToBCKFactory.newYieldToBCK(address(stabletoken), address(bck), address(owner), address(owner));
         Governanceemissions = emissionsFactory.newEmissions(address(BCKGOV), address(esBCKGOV));
-        vest = vestingContractFactory.esBCKGOVtoBCKGOV(address(BCKGOV), address(esBCKGOV));
+        vest = vestingContractFactory.esBCKGOVtoBCKGOV(address(esBCKGOV), address(BCKGOV));
         bcksavin = savingsAccountFactory.stake(address(BCKGOV), address(esBCKGOV));
         buyseUSD = BuyTokensStableandBCKGov.BuyToken(address(stabletoken));
         buysBCKGOV = BuyTokensStableandBCKGov.BuyToken(address(BCKGOV));
@@ -157,8 +158,8 @@ contract Deployer is DSAuth {
         eusdtoBCK.setemission(address(Governanceemissions));
         eusdtoBCK.setglobal(address(globalparam));
         eusdtoBCK.setratios(2000, 20, 75);
+        Governanceemissions.setratios(5, 100000000000000000000, 40, 20);
         Governanceemissions.setStablecointoBCK(address(eusdtoBCK));
-        Governanceemissions.setminimumstake(100000000000000000000);
         Governanceemissions.setG(address(globalparam));
         Governanceemissions.setstake(address(bcksavin));
         vest.setpenalty(20);
