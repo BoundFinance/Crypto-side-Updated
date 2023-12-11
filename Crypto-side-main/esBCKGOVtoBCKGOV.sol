@@ -26,7 +26,7 @@ contract VestingContract is DSAuth, DSNote {
 
     function deposit(uint256 amount) external {
         require(amount > 0, "Amount must be greater than 0");
-        // esBCKGOVToken.burn(msg.sender, amount);
+         esBCKGOVToken.burn(msg.sender, amount);
         claim(msg.sender);
         uint256 total = amount;
         if (time2fullRedemption[msg.sender] > block.timestamp) {
@@ -45,7 +45,7 @@ contract VestingContract is DSAuth, DSNote {
     function claim(address _user) public {
         uint256 claimable = getClaimableAmount(_user);
         if(claimable > 0) {
-            // BCKGOVToken.mint(msg.sender, claimable);
+             BCKGOVToken.mint(msg.sender, claimable);
         }
         lastClaimTime[_user] = block.timestamp;
         emit Claimed(_user, claimable);
@@ -59,8 +59,8 @@ contract VestingContract is DSAuth, DSNote {
         if(amount > 0) {
         // Apply penalty and send half to contract owner
         uint senttoOwner = burnamount * penaltypercentage / 100; 
-        // esBCKGOVToken.mint(owner, senttoOwner);
-        // BCKGOVToken.mint(msg.sender, amount);
+        esBCKGOVToken.mint(owner, senttoOwner);
+        BCKGOVToken.mint(msg.sender, amount);
         }
         // Update user's vesting
         unstakeRatio[msg.sender] = 0;
