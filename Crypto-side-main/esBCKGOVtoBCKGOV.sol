@@ -10,8 +10,9 @@ contract VestingContract is DSAuth, DSNote {
     uint256 public constant exitCycle = 20 days;
     uint public penaltypercentage; //based on percentage so 10 = 10%, 1 = 1%
 
+
     mapping(address => uint256) public time2fullRedemption;
-    mapping(address => uint256) public vestingRatio;
+    mapping(address => uint256) public unstakeRatio;
     mapping(address => uint256) public lastClaimTime;
 
     event Deposited(address indexed user, uint256 amount);
@@ -25,89 +26,76 @@ contract VestingContract is DSAuth, DSNote {
 
     function deposit(uint256 amount) external {
         require(amount > 0, "Amount must be greater than 0");
-        esBCKGOVToken.burn(msg.sender, amount);
-        updateVesting(msg.sender, amount);
+        // esBCKGOVToken.burn(msg.sender, amount);
+        claim(msg.sender);
+        uint256 total = amount;
+        if (time2fullRedemption[msg.sender] > block.timestamp) {
+            total += unstakeRatio[msg.sender] * (time2fullRedemption[msg.sender] - block.timestamp);
+        }
+        unstakeRatio[msg.sender] = total / exitCycle;
+        time2fullRedemption[msg.sender] = block.timestamp + exitCycle;
         emit Deposited(msg.sender, amount);
     }
-
 
     function setpenalty(uint _penaltypercentage) public auth {
         require(_penaltypercentage <= 100);
         penaltypercentage = _penaltypercentage;
     }
 
-    function claim() external {
-        uint256 claimable = getClaimableAmount(msg.sender);
-        require(claimable > 0, "No tokens available for claiming");
-        BCKGOVToken.mint(msg.sender, claimable);
-        lastClaimTime[msg.sender] = block.timestamp;
-        emit Claimed(msg.sender, claimable);
+    function claim(address _user) public {
+        uint256 claimable = getClaimableAmount(_user);
+        if(claimable > 0) {
+            // BCKGOVToken.mint(msg.sender, claimable);
+        }
+        lastClaimTime[_user] = block.timestamp;
+        emit Claimed(_user, claimable);
     }
 
-       function unlockPrematurely() external {
-        require(block.timestamp + exitCycle - 3 days > time2fullRedemption[msg.sender], "Error");
-        uint256 reservedAmount = getReservedAmountForVesting(msg.sender);
-        uint256 preUnlockableAmount = getPreUnlockableAmount(msg.sender);
-        uint256 claimableAmount = getClaimableAmount(msg.sender);
-        uint256 amount = preUnlockableAmount + claimableAmount;
-        uint burnamount = reservedAmount - preUnlockableAmount;
 
+    function unlockPrematurely() external {
+        require(block.timestamp + exitCycle - 3 days > time2fullRedemption[msg.sender], "Error");
+        uint256 amount = getPreUnlockableAmount(msg.sender) + getClaimableAmount(msg.sender);
+        uint burnamount = getReservedAmountForVesting(msg.sender) - getPreUnlockableAmount(msg.sender);
+        if(amount > 0) {
         // Apply penalty and send half to contract owner
         uint senttoOwner = burnamount * penaltypercentage / 100; 
-        esBCKGOVToken.mint(owner, senttoOwner);
-
+        // esBCKGOVToken.mint(owner, senttoOwner);
+        // BCKGOVToken.mint(msg.sender, amount);
+        }
         // Update user's vesting
-        vestingRatio[msg.sender] = 0;
+        unstakeRatio[msg.sender] = 0;
         time2fullRedemption[msg.sender] = 0;
 
-        BCKGOVToken.mint(msg.sender, amount);
         emit UnlockedPrematurely(msg.sender, amount);
-    }
-
-    function getPreUnlockableAmount(address user) public view returns (uint256) {
-        uint256 reservedAmount = getReservedAmountForVesting(user);
-        if (reservedAmount == 0) return 0;
-        return (reservedAmount * (75e18 - ((time2fullRedemption[user] - block.timestamp) * 70e18) / (exitCycle / 1 days - 3) / 1 days)) / 100e18;
     }
 
     function UnlockedPrematurelyview(address _user) public view returns (uint) {
         require(block.timestamp + exitCycle - 3 days > time2fullRedemption[_user], "You can't Unlock before 3 dats have passed");
-        uint256 reservedAmount = getReservedAmountForVesting(_user);
-        uint256 preUnlockableAmount = getPreUnlockableAmount(_user);
-        uint256 claimableAmount = getClaimableAmount(_user);
-        uint256 amount = preUnlockableAmount + claimableAmount;
-        uint burnamount = reservedAmount - preUnlockableAmount;
+        uint256 amount = getPreUnlockableAmount(msg.sender) + getClaimableAmount(msg.sender);
+        uint burnamount = getReservedAmountForVesting(msg.sender) - getPreUnlockableAmount(msg.sender);
         return amount;
     }
 
-    function updateVesting(address user, uint256 amount) internal {
-        if (time2fullRedemption[user] > block.timestamp) {
-            uint256 total = vestingRatio[user] * (time2fullRedemption[user] - block.timestamp) + amount;
-            vestingRatio[user] = total / exitCycle;
-            time2fullRedemption[user] = block.timestamp + exitCycle;
-        } else {
-            vestingRatio[user] = amount / exitCycle;
-            time2fullRedemption[user] = block.timestamp + exitCycle;
-        }
+    function getPreUnlockableAmount(address user) public view returns (uint256 amount) {
+        uint256 a = getReservedAmountForVesting(user);
+        if (a == 0) return 0;
+        amount = (a * (75e18 - ((time2fullRedemption[user] - block.timestamp) * 70e18) / (exitCycle / 1 days - 3) / 1 days)) / 100e18;
     }
 
-    function getClaimableAmount(address user) public view returns (uint256) {
+    function getClaimableAmount(address user) public view returns (uint256 amount) {
         if (time2fullRedemption[user] > lastClaimTime[user]) {
-            uint256 amount = block.timestamp > time2fullRedemption[user]
-                ? vestingRatio[user] * (time2fullRedemption[user] - lastClaimTime[user])
-                : vestingRatio[user] * (block.timestamp - lastClaimTime[user]);
-            return amount;
+            amount = block.timestamp > time2fullRedemption[user] ? unstakeRatio[user] * (time2fullRedemption[user] - lastClaimTime[user]) : unstakeRatio[user] * (block.timestamp - lastClaimTime[user]);
         }
-        return 0;
     }
 
-    function getReservedAmountForVesting(address user) public view returns (uint256) {
+    function getReservedAmountForVesting(address user) public view returns (uint256 amount) {
         if (time2fullRedemption[user] > block.timestamp) {
-            return vestingRatio[user] * (time2fullRedemption[user] - block.timestamp);
+            amount = unstakeRatio[user] * (time2fullRedemption[user] - block.timestamp);
         }
-        return 0;
     }
+
 
     
 }
+
 
