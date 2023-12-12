@@ -23,6 +23,7 @@ interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
     function approve(address spender, uint256 amount) external returns (bool);
+    function rebaseOptIn() external;
 }
 
 interface emissions {
@@ -102,6 +103,10 @@ contract StablecointoBCK is DSAuth, DSNote {
 
     function setcashbackcontract(address _cashbackappcontract) public auth {
         cash = cashbackcontract(_cashbackappcontract);
+    }
+
+    function setrebase() public auth {
+        stableToken.rebaseOptIn();
     }
 
     function setratios (uint amount, uint sharetoprotocol, uint reserveamount) public auth {
