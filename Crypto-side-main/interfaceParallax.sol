@@ -9,6 +9,15 @@ interface emissions {
  function updateInterestCorrectionsadd(address _user, uint256 _amount) external;
 }
 
+interface IWETH {
+    // Convert ETH to WETH
+    function deposit() external payable;
+
+    // Convert WETH to ETH
+    function withdraw(uint256 amount) external;
+}
+
+
 interface global {
  function globalsharesadd(address _user, uint _amount) external;
  function globalsharessub(address _user, uint _amount) external;
@@ -76,6 +85,8 @@ struct AssetConfig {
         ICALMCore.Amounts calldata amounts,
         uint256[4] calldata amountsOutMinInner
     ) external returns (ICALMCore.Amounts memory amountsOut);
+
+    function paused() external view returns (bool);
     
 }
 
